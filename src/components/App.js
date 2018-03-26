@@ -20,10 +20,23 @@ class App extends Component {
     });
   };
 
+  isLoggedIn = () => {    
+    const token = localStorage.getItem('token');
+    if (token) {
+      return true;
+    }
+    return false;
+  };
+
   render() {
+    console.log(this.isLoggedIn());
     return (
       <div className="App">
-        <Route exact path="/" component={SplashPage} />
+        <Route
+          exact
+          path="/"
+          render={() => <SplashPage isLoggedIn={this.isLoggedIn()} />}
+        />
         <Route
           path="/login"
           render={({ history }) => (
@@ -32,6 +45,7 @@ class App extends Component {
                 this.configureAuth(username, id, token)
               }
               history={history}
+              isLoggedIn={this.isLoggedIn()}
             />
           )}
         />

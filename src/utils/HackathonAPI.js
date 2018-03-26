@@ -33,3 +33,15 @@ export const checkAnswer = (id, answer, token) =>
   })
     .then(res => res.json())
     .then(data => data);
+
+export const logout = token =>
+  fetch(`${api}/users/logout`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-auth': token
+    },
+    body: JSON.stringify({ token })
+  })
+    .then(res => res.json())
+    .then(data => data);

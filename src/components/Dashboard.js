@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { Tabs, Tab } from 'react-bootstrap';
+
 import propTypes from 'prop-types';
 import alert from 'sweetalert';
 import * as HackathonAPI from '../utils/HackathonAPI';
-
 import Header from './Header';
 import QuestionList from './QuestionList';
+import NavBar from './NavBar';
 
 class Dashboard extends Component {
   state = {
@@ -36,31 +38,48 @@ class Dashboard extends Component {
         });
       })
       .catch(() => {
-        alert('Session has timed out, Please log back in.');
+        localStorage.removeItem('token');
         this.props.history.push('/login');
       });
+  };
+
+  isLoggedIn = () => {
+    if (localStorage.getItem('token')) {
+      return true;
+    }
+    return false;
   };
 
   render() {
     return (
       <div>
         <Header />
+        <NavBar history={this.props.history} />
         <div className="tab-and-question-container">
-          <div className="tablink-container">
-            <button className="tablink">Sever 1</button>
-            <button className="tablink">Sever 2</button>
-            <button className="tablink">Server 3</button>
-            <button className="tablink">Server 4</button>
-          </div>
           <br />
           <br />
           <br />
-          <QuestionList
-            questions={this.state.questions}
-            section={1}
-            token={this.state.token}
-            updateQuestions={this.updateStateFromAPI}
-          />
+          <Tabs id="uncontrolled-tab-example">
+            <Tab eventKey={1} title="Server 1">
+              <QuestionList
+                questions={this.state.questions}
+                section={1}
+                token={this.state.token}
+                updateQuestions={this.updateStateFromAPI}
+              />
+            </Tab>
+            <Tab eventKey={2} title="Server 2">
+              <QuestionList
+                questions={this.state.questions}
+                section={2}
+                token={this.state.token}
+                updateQuestions={this.updateStateFromAPI}
+              />
+            </Tab>
+            <Tab eventKey={3} title="Server 3">
+              Tab 3 content
+            </Tab>
+          </Tabs>
         </div>
       </div>
     );

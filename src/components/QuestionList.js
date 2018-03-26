@@ -5,10 +5,8 @@ import Question from './Question';
 class QuestionList extends Component {
   getQuestions = () => {
     const { questions, section, token, updateQuestions } = this.props;
-    return questions.map(question => {
-      const { text, userAnswer } = question;
-      console.log(userAnswer);
-      
+    return questions.filter(obj => obj.section === section).map(question => {
+      const { text, userAnswer, order, completed } = question;
       const id = question['_id'];
       return (
         <Question

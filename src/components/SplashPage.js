@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
+import NavBar from './NavBar';
 
-const SplashPage = () => (
+const SplashPage = (props) => (
   <div>
     <Header />
-    <Link className="login-button" to="/login">Login</Link>
+    <NavBar />
+    <Link className="login-button" to="/login">
+      Login
+    </Link>
   </div>
 );
 

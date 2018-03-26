@@ -34,8 +34,6 @@ class Question extends Component {
   };
 
   checkForPreviousAnswer = () => {
-    console.log(this.props.userAnswer);
-
     if (this.props.userAnswer) {
       return this.props.userAnswer;
     }
