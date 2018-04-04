@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 
 import propTypes from 'prop-types';
-import alert from 'sweetalert';
 import * as HackathonAPI from '../utils/HackathonAPI';
 import Header from './Header';
 import QuestionList from './QuestionList';
@@ -17,6 +16,7 @@ class Dashboard extends Component {
   componentWillMount() {
     if (this.props.token) {
       localStorage.setItem('token', this.props.token);
+      localStorage.setItem('username', this.props.username)
       this.setState({
         token: this.props.token
       });
@@ -29,6 +29,21 @@ class Dashboard extends Component {
   componentDidMount() {
     this.updateStateFromAPI();
   }
+
+  setQuestionShowState = section => {
+    const sectionArray = this.state.questions.filter(
+      obj => obj.section === section
+    );
+    const questionCount = sectionArray.filter(obj => obj.completed === true);
+    return questionCount.length + 1;
+  };
+
+  isLoggedIn = () => {
+    if (localStorage.getItem('token')) {
+      return true;
+    }
+    return false;
+  };
 
   updateStateFromAPI = () => {
     HackathonAPI.getQuestions(this.state.token)
@@ -43,13 +58,6 @@ class Dashboard extends Component {
       });
   };
 
-  isLoggedIn = () => {
-    if (localStorage.getItem('token')) {
-      return true;
-    }
-    return false;
-  };
-
   render() {
     return (
       <div>
@@ -59,11 +67,12 @@ class Dashboard extends Component {
           <br />
           <br />
           <br />
-          <Tabs id="uncontrolled-tab-example">
+          <Tabs id="uncontrolled-tab-example" onClick={this.updateStateFromAPI}>
             <Tab eventKey={1} title="Server 1">
               <QuestionList
                 questions={this.state.questions}
                 section={1}
+                show={this.setQuestionShowState(1)}
                 token={this.state.token}
                 updateQuestions={this.updateStateFromAPI}
               />
@@ -73,11 +82,36 @@ class Dashboard extends Component {
                 questions={this.state.questions}
                 section={2}
                 token={this.state.token}
+                show={this.setQuestionShowState(2)}
                 updateQuestions={this.updateStateFromAPI}
               />
             </Tab>
             <Tab eventKey={3} title="Server 3">
-              Tab 3 content
+              <QuestionList
+                questions={this.state.questions}
+                section={3}
+                token={this.state.token}
+                show={this.setQuestionShowState(3)}
+                updateQuestions={this.updateStateFromAPI}
+              />
+            </Tab>
+            <Tab eventKey={4} title="Server 4">
+              <QuestionList
+                questions={this.state.questions}
+                section={4}
+                token={this.state.token}
+                show={this.setQuestionShowState(4)}
+                updateQuestions={this.updateStateFromAPI}
+              />
+            </Tab>
+            <Tab eventKey={5} title="Server 5">
+              <QuestionList
+                questions={this.state.questions}
+                section={5}
+                token={this.state.token}
+                show={this.setQuestionShowState(5)}
+                updateQuestions={this.updateStateFromAPI}
+              />
             </Tab>
           </Tabs>
         </div>

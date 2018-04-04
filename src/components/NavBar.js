@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as HackathonAPI from '../utils/HackathonAPI';
-import alert from 'sweetalert';
 
 class NavBar extends Component {
   getRightText = () => {
     const isLoggedIn = localStorage.getItem('token');
-    
+
     if (isLoggedIn) {
       return (
         <div>
@@ -23,20 +22,16 @@ class NavBar extends Component {
                 <NavItem eventKey={1} href="/dashboard">
                   Dashboard
                 </NavItem>
-                <NavItem eventKey={2} href="/about">
-                  About
+                <NavItem eventKey={2} href="/rules">
+                  Rules
                 </NavItem>
-                <NavDropdown eventKey={3} title="Rules" id="basic-nav-dropdown">
-                  <MenuItem eventKey={3.1}>Action</MenuItem>
-                  <MenuItem eventKey={3.2}>Another action</MenuItem>
-                  <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                  <MenuItem divider />
-                  <MenuItem eventKey={3.3}>Separated link</MenuItem>
-                </NavDropdown>
               </Nav>
               <Nav pullRight onSelect={this.handleSelect}>
                 <Navbar.Text>
-                  Signed in as: <Navbar.Link href="#">Team 1</Navbar.Link>
+                  Signed in as:{' '}
+                  <Navbar.Link href="#">
+                    {localStorage.getItem('username')}
+                  </Navbar.Link>
                 </Navbar.Text>
                 <NavItem eventKey={2} onClick={this.logUserOut}>
                   Logout
@@ -62,16 +57,9 @@ class NavBar extends Component {
               <NavItem eventKey={1} href="/dashboard">
                 Dashboard
               </NavItem>
-              <NavItem eventKey={2} href="/about">
-                About
+              <NavItem eventKey={2} href="/rules">
+                Rules
               </NavItem>
-              <NavDropdown eventKey={3} title="Rules" id="basic-nav-dropdown">
-                <MenuItem eventKey={3.1}>Action</MenuItem>
-                <MenuItem eventKey={3.2}>Another action</MenuItem>
-                <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                <MenuItem divider />
-                <MenuItem eventKey={3.3}>Separated link</MenuItem>
-              </NavDropdown>
             </Nav>
             <Nav pullRight>
               <NavItem eventKey={2} href="/login">
@@ -86,13 +74,11 @@ class NavBar extends Component {
 
   logUserOut = () => {
     const token = localStorage.getItem('token');
-
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
     HackathonAPI.logout(token)
       .then(data => {
-        console.log('test logout Feature');
-        console.log('Getting here');
         localStorage.removeItem('token');
-        alert('Logout Successful!');
         this.props.history.push('/');
       })
       .catch();
