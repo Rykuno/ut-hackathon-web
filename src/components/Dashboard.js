@@ -68,7 +68,7 @@ class Dashboard extends Component {
           <br />
           <br />
           <Tabs id="uncontrolled-tab-example" onClick={this.updateStateFromAPI}>
-            <Tab eventKey={1} title="Server 1">
+            <Tab eventKey={1} title="Windows">
               <QuestionList
                 questions={this.state.questions}
                 section={1}
@@ -77,7 +77,7 @@ class Dashboard extends Component {
                 updateQuestions={this.updateStateFromAPI}
               />
             </Tab>
-            <Tab eventKey={2} title="Server 2">
+            <Tab eventKey={2} title="Redfalcon">
               <QuestionList
                 questions={this.state.questions}
                 section={2}
@@ -86,7 +86,7 @@ class Dashboard extends Component {
                 updateQuestions={this.updateStateFromAPI}
               />
             </Tab>
-            <Tab eventKey={3} title="Server 3">
+            <Tab eventKey={3} title="Cookie">
               <QuestionList
                 questions={this.state.questions}
                 section={3}
@@ -95,7 +95,7 @@ class Dashboard extends Component {
                 updateQuestions={this.updateStateFromAPI}
               />
             </Tab>
-            <Tab eventKey={4} title="Server 4">
+            <Tab eventKey={4} title="Android">
               <QuestionList
                 questions={this.state.questions}
                 section={4}
@@ -104,7 +104,7 @@ class Dashboard extends Component {
                 updateQuestions={this.updateStateFromAPI}
               />
             </Tab>
-            <Tab eventKey={5} title="Server 5">
+            <Tab eventKey={5} title="Bonus">
               <QuestionList
                 questions={this.state.questions}
                 section={5}
